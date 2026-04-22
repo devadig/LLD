@@ -1,0 +1,76 @@
+// ============================================================
+//  ABSTRACTION — Interview Cheat Sheet
+// ============================================================
+//
+//  Q: What is Abstraction?
+//  A: Showing only the WHAT (what an object does) and hiding
+//     the HOW (how it does it internally).
+//     Define a contract/interface — let implementations vary.
+//
+//  Q: WHY do we need it?
+//  A: Three reasons:
+//
+//     1. SIMPLICITY FOR THE CALLER
+//        → sendAlert(service, recipient, msg) works for any
+//          notification type. The caller doesn't deal with
+//          SMTP config, Twilio keys, Firebase tokens, etc.
+//        → Like driving a car — you steer, you don't rewire
+//          the power steering mechanism each time.
+//
+//     2. EXTENSIBILITY WITHOUT MODIFICATION
+//        → New notification type (WhatsApp)? Create a new class,
+//          implement the abstract method. Done.
+//        → You NEVER touch existing working code.
+//        → No if-else chains growing forever.
+//
+//     3. LOOSE COUPLING
+//        → Your business logic depends on the ABSTRACTION
+//          (NotificationService), not on concrete classes.
+//        → You can swap Email for SMS without the caller knowing.
+//        → Makes testing easy — pass a MockNotification in tests.
+//
+//  Q: Abstract Class vs Interface?
+//  A:
+//     ABSTRACT CLASS                  INTERFACE
+//     → Has shared code + abstract    → Pure contract (pre-Java 8)
+//       methods                       → Can have default methods
+//     → Single inheritance only         (Java 8+)
+//     → Use when subclasses share     → Multiple inheritance allowed
+//       common behavior               → Use when unrelated classes
+//     → "is-a" with shared logic        share a capability
+//                                     → "can-do" contract
+//
+//     WHEN TO USE WHICH:
+//     → If you have shared logic (like our validation + logging
+//       in send()), use abstract class.
+//     → If you just need a contract with no shared logic,
+//       use interface.
+//     → In real projects, you often use BOTH:
+//       Interface → Abstract Class → Concrete Class
+//
+//  Q: Real-world analogy?
+//  A: TV Remote.
+//     → You press "Volume Up" (abstraction — the WHAT)
+//     → You don't know if it uses infrared, Bluetooth, or
+//       WiFi internally (the HOW)
+//     → Manufacturer can change IR to Bluetooth — you still
+//       just press the same button.
+//
+//  Q: How is Abstraction different from Encapsulation?
+//  A: This is a VERY common interview question!
+//
+//     ENCAPSULATION              ABSTRACTION
+//     → Hides DATA               → Hides IMPLEMENTATION
+//     → private fields +         → abstract class / interface
+//       controlled methods
+//     → "Don't touch my          → "Don't worry about how
+//        internals directly"        I do it, just tell me
+//                                   what to do"
+//     → Works at FIELD level     → Works at CLASS/METHOD level
+//     → About PROTECTION         → About SIMPLIFICATION
+//
+//     They work TOGETHER:
+//     → Abstraction hides complexity at the design level
+//     → Encapsulation hides data at the implementation level
+//
+// ============================================================
