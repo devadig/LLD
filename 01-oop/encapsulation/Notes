@@ -1,0 +1,48 @@
+// ============================================================
+//  ENCAPSULATION — Interview Cheat Sheet
+// ============================================================
+//
+//  Q: What is Encapsulation?
+//  A: Bundling data (fields) and the methods that operate on
+//     that data into a single unit (class), and RESTRICTING
+//     direct access to the internals.
+//
+//  Q: WHY do we need it? (This is what interviewers really ask)
+//  A: Three reasons:
+//
+//     1. PROTECT INVARIANTS
+//        → Your object should never be in an invalid state.
+//        → e.g., BankAccount balance should never go negative.
+//        → If balance is public, any code can set it to -5000.
+//        → With encapsulation, withdraw() enforces the rule.
+//
+//     2. HIDE IMPLEMENTATION DETAILS
+//        → Tomorrow you might store balance in paisa instead
+//          of rupees internally. If balance is private, you
+//          just change getBalance() to return balance/100.
+//          No other code needs to change.
+//        → If balance was public, 500 files might break.
+//
+//     3. CONTROLLED ACCESS
+//        → You decide: read-only? write-only? read-write?
+//        → getBalance() exists but NO setBalance() → read-only
+//        → deposit()/withdraw() are business methods, not
+//          dumb setters.
+//
+//  Q: Is encapsulation just getters and setters?
+//  A: NO! This is a common misconception.
+//     Making a field private and adding both getter AND setter
+//     is basically the same as making it public — no real
+//     protection. True encapsulation means:
+//     → Expose BEHAVIOR (deposit, withdraw) not data (setBalance)
+//     → Give only the access that's actually needed
+//     → A setter that blindly sets a value is NOT encapsulation
+//
+//  Q: Real-world analogy?
+//  A: ATM Machine.
+//     → You can't open the machine and grab cash (private fields)
+//     → You use the screen/buttons (public methods)
+//     → The machine enforces rules: PIN check, daily limit,
+//        sufficient balance (validation in methods)
+//
+// ============================================================
