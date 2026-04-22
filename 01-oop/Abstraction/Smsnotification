@@ -1,0 +1,18 @@
+// ============================================================
+// CONCRETE IMPLEMENTATION 2: SMS
+// ============================================================
+// Added LATER — but nothing in the existing code changed!
+// We just created a new class. That's the power of abstraction.
+// ============================================================
+
+public class SmsNotification extends NotificationService {
+
+    @Override
+    protected void deliverNotification(String recipient, String message) {
+        // Imagine this connects to Twilio API, formats text, etc.
+        System.out.println("   💬 [SMS] Connecting to Twilio API...");
+        System.out.println("   💬 [SMS] Formatting message for SMS (160 char limit)...");
+        System.out.println("   💬 [SMS] Sending SMS to: " + recipient);
+        System.out.println("   💬 [SMS] Content: " + message);
+    }
+}
