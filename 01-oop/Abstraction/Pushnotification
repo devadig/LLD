@@ -1,0 +1,17 @@
+// ============================================================
+// CONCRETE IMPLEMENTATION 3: Push Notification
+// ============================================================
+// Added EVEN LATER — still zero changes to existing code!
+// ============================================================
+
+public class PushNotification extends NotificationService {
+
+    @Override
+    protected void deliverNotification(String recipient, String message) {
+        // Imagine this connects to Firebase, builds push payload, etc.
+        System.out.println("   🔔 [PUSH] Connecting to Firebase...");
+        System.out.println("   🔔 [PUSH] Building push payload...");
+        System.out.println("   🔔 [PUSH] Sending push to device: " + recipient);
+        System.out.println("   🔔 [PUSH] Content: " + message);
+    }
+}
