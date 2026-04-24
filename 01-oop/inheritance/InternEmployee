@@ -1,0 +1,28 @@
+// ============================================================
+// CHILD 3: Intern Employee
+// ============================================================
+// Added LATER — zero changes to Employee, FullTimeEmployee,
+// or ContractEmployee. Just a new class.
+// Gets checkIn/checkOut for free. Defines its own salary.
+// ============================================================
+
+public class InternEmployee extends Employee {
+
+    private double monthlyStipend;
+    private int durationMonths;
+
+    public InternEmployee(String name, String id, String dept,
+                          double monthlyStipend, int durationMonths) {
+        super(name, id, dept);
+        this.monthlyStipend = monthlyStipend;
+        this.durationMonths = durationMonths;
+    }
+
+    @Override
+    public double calculateSalary() {
+        double total = monthlyStipend * durationMonths;
+        System.out.println("   💰 [INTERN] ₹" + monthlyStipend + "/month × " +
+                           durationMonths + " months = ₹" + total);
+        return total;
+    }
+}
