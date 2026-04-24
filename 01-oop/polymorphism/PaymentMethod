@@ -1,0 +1,18 @@
+// ============================================================
+// POLYMORPHISM — "One interface, many implementations"
+// ============================================================
+// We're building a Payment System.
+// The PaymentProcessor handles payments — but it doesn't know
+// (or care) whether it's UPI, Credit Card, or Net Banking.
+//
+// The JVM figures out WHICH method to call AT RUNTIME based
+// on the actual object type. That's runtime polymorphism.
+// ============================================================
+
+public interface PaymentMethod {
+
+    // Contract: every payment method must be able to do these
+    void validate(double amount);
+    boolean processPayment(double amount);
+    String getMethodName();
+}
