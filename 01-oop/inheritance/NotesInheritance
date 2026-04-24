@@ -1,0 +1,85 @@
+// ============================================================
+//  INHERITANCE — Interview Cheat Sheet
+// ============================================================
+//
+//  Q: What is Inheritance?
+//  A: A mechanism where a child class acquires the fields and
+//     methods of a parent class, enabling code reuse and
+//     establishing an "is-a" relationship.
+//
+//  Q: WHY do we need it?
+//  A: Two reasons:
+//
+//     1. CODE REUSE (DRY — Don't Repeat Yourself)
+//        → Common fields (name, id) and behavior (checkIn,
+//          checkOut) written ONCE in the parent.
+//        → 10 employee types? checkIn logic exists in 1 place.
+//        → Fix a bug → fixed for all subtypes automatically.
+//
+//     2. ESTABLISH A TYPE HIERARCHY
+//        → FullTimeEmployee IS-A Employee.
+//        → This lets you write methods like processPayroll(Employee e)
+//          that work with ANY employee type.
+//        → Enables polymorphism (next topic!).
+//
+//  Q: What is "Favor Composition over Inheritance"? ⭐ VERY COMMON
+//  A: This means: don't use inheritance just for code reuse.
+//     Use it ONLY for genuine "is-a" relationships where ALL
+//     parent behavior makes sense for the child.
+//
+//     BAD EXAMPLE:
+//       Employee has checkIn(). FreelanceEmployee extends Employee.
+//       But freelancers don't check in! Now you override checkIn()
+//       to do nothing. That's a sign inheritance is wrong here.
+//
+//     GOOD ALTERNATIVE (Composition):
+//       Define Attendable interface (checkIn, checkOut).
+//       Define Payable interface (calculateSalary).
+//       FullTimeEmployee implements BOTH.
+//       FreelanceEmployee implements only Payable.
+//       Each class picks its capabilities. No unwanted baggage.
+//
+//  Q: Types of inheritance in Java?
+//  A: - Single: A extends B
+//     - Multilevel: A extends B, B extends C
+//     - Hierarchical: B extends A, C extends A
+//     - ❌ Multiple class inheritance NOT allowed in Java
+//       (Diamond Problem). Use interfaces instead.
+//
+//  Q: What is the Diamond Problem?
+//  A: If class C extends both A and B, and both A and B have
+//     a method doSomething(), which version does C inherit?
+//     Java avoids this ambiguity by disallowing multiple class
+//     inheritance. Interfaces solve it because:
+//     → If two interfaces have same default method, the
+//       implementing class MUST override it explicitly.
+//
+//  Q: When to use Inheritance vs Interface vs Composition?
+//  A:
+//     INHERITANCE (extends)
+//     → True "is-a" relationship
+//     → Child needs ALL parent behavior
+//     → You want to share implementation, not just contract
+//     → Example: ArrayList IS-A AbstractList
+//
+//     INTERFACE (implements)
+//     → "can-do" / capability contract
+//     → Unrelated classes share a behavior
+//     → Example: both List and Set implement Collection
+//
+//     COMPOSITION (has-a)
+//     → One class USES another class
+//     → More flexible, less coupling
+//     → Example: Car HAS-A Engine (Car doesn't extend Engine!)
+//
+//  Q: Can you call parent's constructor from child?
+//  A: Yes, using super(). It MUST be the first statement in
+//     the child's constructor. If not explicitly called, Java
+//     auto-calls the no-arg super().
+//
+//  Q: Can you prevent a class from being inherited?
+//  A: Yes — declare it as "final class". Example: String is final.
+//     Can also use final on individual methods to prevent
+//     overriding while still allowing class inheritance.
+//
+// ============================================================
