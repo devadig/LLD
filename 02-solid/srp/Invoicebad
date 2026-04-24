@@ -1,0 +1,91 @@
+// ============================================================
+// ❌ BAD: Invoice class VIOLATING Single Responsibility
+// ============================================================
+// This ONE class handles:
+//   1. Business logic (calculate total)
+//   2. Database operations (save/load)
+//   3. PDF generation (presentation)
+//   4. Email notification
+//
+// FOUR reasons to change = FOUR different teams can break
+// this class. Change the DB schema? You're editing the same
+// file that calculates tax. Dangerous.
+// ============================================================
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class InvoiceBad {
+
+    private String invoiceId;
+    private String customerName;
+    private List<String> itemNames = new ArrayList<>();
+    private List<Double> itemPrices = new ArrayList<>();
+    private double taxRate;
+
+    public InvoiceBad(String invoiceId, String customerName, double taxRate) {
+        this.invoiceId = invoiceId;
+        this.customerName = customerName;
+        this.taxRate = taxRate;
+    }
+
+    public void addItem(String name, double price) {
+        itemNames.add(name);
+        itemPrices.add(price);
+    }
+
+    // ---- RESPONSIBILITY 1: Business Logic ----
+    public double calculateSubtotal() {
+        double sum = 0;
+        for (double price : itemPrices) sum += price;
+        return sum;
+    }
+
+    public double calculateTax() {
+        return calculateSubtotal() * (taxRate / 100);
+    }
+
+    public double calculateTotal() {
+        return calculateSubtotal() + calculateTax();
+    }
+
+    // ---- RESPONSIBILITY 2: Database ----
+    // If DB schema changes, you edit THIS file.
+    // But this file also has business logic. Risky!
+    public void saveToDatabase() {
+        System.out.println("[DB] Connecting to MySQL...");
+        System.out.println("[DB] INSERT INTO invoices VALUES ('" +
+                invoiceId + "', '" + customerName + "', " + calculateTotal() + ")");
+        System.out.println("[DB] Saved successfully.");
+    }
+
+    // ---- RESPONSIBILITY 3: PDF Generation ----
+    // If PDF layout changes, you edit THIS file.
+    // A designer's request now touches business logic code!
+    public void generatePDF() {
+        System.out.println("[PDF] Creating PDF for invoice " + invoiceId);
+        System.out.println("[PDF] Adding header: " + customerName);
+        for (int i = 0; i < itemNames.size(); i++) {
+            System.out.println("[PDF] Line item: " + itemNames.get(i) + " — ₹" + itemPrices.get(i));
+        }
+        System.out.println("[PDF] Total: ₹" + calculateTotal());
+        System.out.println("[PDF] PDF generated: " + invoiceId + ".pdf");
+    }
+
+    // ---- RESPONSIBILITY 4: Email Notification ----
+    // If email provider changes (SendGrid → SES), you edit THIS file.
+    // Now an infra change touches your core business class!
+    public void sendEmail(String to) {
+        System.out.println("[EMAIL] Connecting to SMTP server...");
+        System.out.println("[EMAIL] Sending invoice " + invoiceId + " to " + to);
+        System.out.println("[EMAIL] Subject: Invoice #" + invoiceId + " — ₹" + calculateTotal());
+        System.out.println("[EMAIL] Email sent.");
+    }
+
+    // Getters for other classes to use (needed in the GOOD version)
+    public String getInvoiceId() { return invoiceId; }
+    public String getCustomerName() { return customerName; }
+    public List<String> getItemNames() { return itemNames; }
+    public List<Double> getItemPrices() { return itemPrices; }
+    public double getTaxRate() { return taxRate; }
+}
